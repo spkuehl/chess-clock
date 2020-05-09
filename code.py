@@ -8,7 +8,6 @@ from digitalio import DigitalInOut, Direction, Pull
 import rtc
 import time
 
-
 # Import the HT16K33 LED segment module.
 from adafruit_ht16k33 import segments
 
@@ -16,8 +15,23 @@ from adafruit_ht16k33 import segments
 i2c = busio.I2C(board.SCL, board.SDA)
 
 
-
 class CountdownTimer(object):
+    """Countdown timer for a chess player.
+
+    Parameters
+    ----------
+    time_left : `integer`
+       Time remaining on the clock, initial value is game length.
+    display : `Seg7x4`
+       Adafruit LED display object.
+    display : `switch`
+       Button object to pause timer.
+    display : `active`
+       Flag to identify if clock is active and counting down.
+    display : `increment`
+       Time to add to clock after a pause (making a move).
+    """
+
     def __init__(self, time_left, display, switch, active=False, increment=0):
         self.increment = increment
         self.time_left = time_left
@@ -95,7 +109,7 @@ class CountdownTimer(object):
         self.run_clock()
 
 
-s = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c, auto_write=False), switch = DigitalInOut(board.D5), active = False, increment=5)
+s = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c), switch = DigitalInOut(board.D5), active = False, increment=5)
 b = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c, address=0x71), switch = DigitalInOut(board.D6), active = False, increment=5)
 
 while s.active == False:
