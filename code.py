@@ -122,38 +122,42 @@ class CountdownTimer(object):
         self.active = True
         self.run_clock()
 
+def main():
 
-s = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c), switch = DigitalInOut(board.D5), active = False, increment=5)
-b = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c, address=0x71), switch = DigitalInOut(board.D6), active = False, increment=5)
+    s = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c), switch = DigitalInOut(board.D5), active = False, increment=5)
+    b = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c, address=0x71), switch = DigitalInOut(board.D6), active = False, increment=5)
 
-while s.active == False:
-    if b.switch.value:
-        pass
-    else:
-        b.active = False
-        s.active = True
-
-while True:
-    while s.active and (s.flagged == False):
-        if s.started == False:
-            s.start()
-            s.run_clock()
-        else:
-            s.resume()
-        if s.switch.value:
-            pass
-        else:
-            s.active = False
-            b.active = True
-
-    while b.active and (b.flagged == False):
-        if b.started == False:
-            b.start()
-            b.run_clock()
-        else:
-            b.resume()
+    while s.active == False:
         if b.switch.value:
             pass
         else:
             b.active = False
             s.active = True
+
+    while True:
+        while s.active and (s.flagged == False):
+            if s.started == False:
+                s.start()
+                s.run_clock()
+            else:
+                s.resume()
+            if s.switch.value:
+                pass
+            else:
+                s.active = False
+                b.active = True
+
+        while b.active and (b.flagged == False):
+            if b.started == False:
+                b.start()
+                b.run_clock()
+            else:
+                b.resume()
+            if b.switch.value:
+                pass
+            else:
+                b.active = False
+                s.active = True
+
+if __name__ == "__main__":
+    main()
