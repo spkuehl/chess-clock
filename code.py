@@ -47,6 +47,8 @@ class CountdownTimer(object):
         self.flagged = False
 
     def get_display(self, time_left):
+        """Recieve seconds left on the clock and return formatted output.
+        """
         if time_left > 60:
             minutes = int(time_left) // 60
             seconds = int(time_left) % 60
@@ -78,6 +80,10 @@ class CountdownTimer(object):
         self.display.show()
 
     def get_time_remaining(self):
+        """Calculate time remaining on countdown and send to display.
+
+        Always running this function will display a real time countdown.
+        """
         time_now = time.monotonic()
         delta = time_now - (self.time_start)
         self.time_left = self.time_left - delta
@@ -85,25 +91,33 @@ class CountdownTimer(object):
         return self.get_display(self.time_left)
 
     def run_clock(self):
+        """Run the countdown and listen for pauses.
+        """
         while (self.time_left > 0) and (self.active):
             if self.switch.value:
                 pass
             else:
                 self.pause()
             time_display = self.get_time_remaining()
-        if self.time_left == 0:
+        if self.time_left <= 0:
             self.flagged = True
 
     def start(self):
+        """Start the countdown timer.
+        """
         time_now = time.monotonic()
         self.time_start = time_now
         self.started = True
 
     def pause(self):
+        """Pause the countdown timer.
+        """
         self.active = False
         self.time_left = self.time_left + self.increment
 
     def resume(self):
+        """Resume the countdown timer.
+        """
         self.time_start = time.monotonic()
         self.active = True
         self.run_clock()
