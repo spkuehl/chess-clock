@@ -5,11 +5,11 @@ import busio
 
 from digitalio import DigitalInOut, Direction, Pull
 
-import rtc
-import time
 
 # Import the HT16K33 LED segment module.
 from adafruit_ht16k33 import segments
+
+from adafruit_debouncer import Debouncer
 
 # Create the I2C interface.
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -32,15 +32,16 @@ class CountdownTimer(object):
        Time to add to clock after a pause (making a move).
     """
 
-    def __init__(self, time_left, display, switch, active=False, increment=0):
+    def __init__(self, time_left, display, pin, active=False, increment=0):
         self.increment = increment
         self.time_left = time_left
         self.time_start = time.monotonic()
         self.display = display
         self.active = active
-        self.switch = switch
-        self.switch.direction = Direction.INPUT
-        self.switch.pull = Pull.UP
+        self.pin = pin
+        self.pin.direction = Direction.INPUT
+        self.pin.pull = Pull.UP
+        self.switch = Debouncer(pin)
         self.get_display(self.time_left)
         self.display.show()
         self.started = False
@@ -94,9 +95,8 @@ class CountdownTimer(object):
         """Run the countdown and listen for pauses.
         """
         while (self.time_left > 0) and (self.active):
-            if self.switch.value:
-                pass
-            else:
+            self.switch.update()
+            if self.switch.fell:
                 self.pause()
             time_display = self.get_time_remaining()
         if self.time_left <= 0:
@@ -122,16 +122,14 @@ class CountdownTimer(object):
         self.active = True
         self.run_clock()
 
-def main():
 
-    s = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c), switch = DigitalInOut(board.D5), active = False, increment=5)
-    b = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c, address=0x71), switch = DigitalInOut(board.D6), active = False, increment=5)
+def main():
+    s = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c), pin = DigitalInOut(board.D5), active = False, increment=5)
+    b = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c, address=0x71), pin = DigitalInOut(board.D6), active = False, increment=5)
 
     while s.active == False:
-        if b.switch.value:
-            pass
-        else:
-            b.active = False
+        b.switch.update()
+        if b.switch.fell:
             s.active = True
 
     while True:
@@ -141,9 +139,7 @@ def main():
                 s.run_clock()
             else:
                 s.resume()
-            if s.switch.value:
-                pass
-            else:
+            if s.switch.fell:
                 s.active = False
                 b.active = True
 
@@ -153,9 +149,7 @@ def main():
                 b.run_clock()
             else:
                 b.resume()
-            if b.switch.value:
-                pass
-            else:
+            if b.switch.fell:
                 b.active = False
                 s.active = True
 
