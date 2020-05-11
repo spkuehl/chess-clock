@@ -24,8 +24,8 @@ class CountdownTimer(object):
        Time remaining on the clock, initial value is game length.
     display : `Seg7x4`
        Adafruit LED display object.
-    display : `switch`
-       Button object to pause timer.
+    display : `pin`
+       Digital Input object to pause timer (the button).
     display : `active`
        Flag to identify if clock is active and counting down.
     display : `increment`
@@ -35,9 +35,9 @@ class CountdownTimer(object):
     def __init__(self, time_left, display, pin, active=False, increment=0):
         self.increment = increment
         self.time_left = time_left
-        self.time_start = time.monotonic()
         self.display = display
         self.active = active
+        #Configure the Debouncer switch.
         self.pin = pin
         self.pin.direction = Direction.INPUT
         self.pin.pull = Pull.UP
@@ -124,8 +124,8 @@ class CountdownTimer(object):
 
 
 def main():
-    s = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c), pin = DigitalInOut(board.D5), active = False, increment=5)
-    b = CountdownTimer(time_left = 66, display = segments.Seg7x4(i2c, address=0x71), pin = DigitalInOut(board.D6), active = False, increment=5)
+    s = CountdownTimer(time_left = 60, display = segments.Seg7x4(i2c), pin = DigitalInOut(board.D5), active = False, increment=5)
+    b = CountdownTimer(time_left = 60, display = segments.Seg7x4(i2c, address=0x71), pin = DigitalInOut(board.D6), active = False, increment=5)
 
     while s.active == False:
         b.switch.update()
