@@ -129,14 +129,19 @@ def main():
                               display = segments.Seg7x4(i2c, address=0x71),
                               pin = DigitalInOut(board.D6), increment=5)
 
-    while True:
-        #Opposite timer starts when a button is pushed. Game begins.
-        if player_2.switch.fell:
-            player_1.active = True
 
+    while player_1.active == False and player_2.active == False:
+        #Game starts when a player presses thier timer, opposite clock starts.
+        player_1.switch.update()
         if player_1.switch.fell:
             player_2.active = True
 
+        player_2.switch.update()
+        if player_2.switch.fell:
+            player_1.active = True
+
+
+    while True:
         while player_1.active and (player_1.flagged == False):
             if player_1.started == False:
                 player_1.start()
