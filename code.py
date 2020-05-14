@@ -45,7 +45,7 @@ class CountdownTimer(object):
         self.get_display(self.time_left)
         self.display.show()
         self.started = False
-        self.flagged = False
+        self.flagged = False #Time is expired
 
     def get_display(self, time_left):
         """Recieve seconds left on the clock and return formatted output.
@@ -124,34 +124,35 @@ class CountdownTimer(object):
 
 
 def main():
-    s = CountdownTimer(time_left = 60, display = segments.Seg7x4(i2c), pin = DigitalInOut(board.D5), active = False, increment=5)
-    b = CountdownTimer(time_left = 60, display = segments.Seg7x4(i2c, address=0x71), pin = DigitalInOut(board.D6), active = False, increment=5)
+    player_1 = CountdownTimer(time_left = 60, display = segments.Seg7x4(i2c), pin = DigitalInOut(board.D5), active = False, increment=5)
+    player_2 = CountdownTimer(time_left = 60, display = segments.Seg7x4(i2c, address=0x71), pin = DigitalInOut(board.D6), active = False, increment=5)
 
-    while s.active == False:
-        b.switch.update()
-        if b.switch.fell:
-            s.active = True
+    while player_1.active == False:
+        #The game starts when player_2 presses thier timer, starting player_1 clock.
+        player_2.switch.update()
+        if player_2.switch.fell:
+            player_1.active = True
 
     while True:
-        while s.active and (s.flagged == False):
-            if s.started == False:
-                s.start()
-                s.run_clock()
+        while player_1.active and (player_1.flagged == False):
+            if player_1.started == False:
+                player_1.start()
+                player_1.run_clock()
             else:
-                s.resume()
-            if s.switch.fell:
-                s.active = False
-                b.active = True
+                player_1.resume()
+            if player_1.switch.fell:
+                player_1.active = False
+                player_2.active = True
 
-        while b.active and (b.flagged == False):
-            if b.started == False:
-                b.start()
-                b.run_clock()
+        while player_2.active and (player_2.flagged == False):
+            if player_2.started == False:
+                player_2.start()
+                player_2.run_clock()
             else:
-                b.resume()
-            if b.switch.fell:
-                b.active = False
-                s.active = True
+                player_2.resume()
+            if player_2.switch.fell:
+                player_2.active = False
+                player_1.active = True
 
 if __name__ == "__main__":
     main()
