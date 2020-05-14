@@ -124,11 +124,17 @@ class CountdownTimer(object):
 
 
 def main():
-    player_1 = CountdownTimer(time_left = 60, display = segments.Seg7x4(i2c), pin = DigitalInOut(board.D5), active = False, increment=5)
-    player_2 = CountdownTimer(time_left = 60, display = segments.Seg7x4(i2c, address=0x71), pin = DigitalInOut(board.D6), active = False, increment=5)
+    player_1 = CountdownTimer(time_left = 60, display = segments.Seg7x4(i2c),
+                              pin = DigitalInOut(board.D5), active = False,
+                              increment=5)
+
+    player_2 = CountdownTimer(time_left = 60,
+                              display = segments.Seg7x4(i2c, address=0x71),
+                              pin = DigitalInOut(board.D6), active = False,
+                              increment=5)
 
     while player_1.active == False:
-        #The game starts when player_2 presses thier timer, starting player_1 clock.
+        #Game starts when player_2 presses thier timer, player_1 clock starts.
         player_2.switch.update()
         if player_2.switch.fell:
             player_1.active = True
@@ -153,6 +159,7 @@ def main():
             if player_2.switch.fell:
                 player_2.active = False
                 player_1.active = True
+
 
 if __name__ == "__main__":
     main()
