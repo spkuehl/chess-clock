@@ -40,21 +40,21 @@ class CountdownTimer(object):
         self.pin.direction = Direction.INPUT
         self.pin.pull = Pull.UP
         self.switch = Debouncer(pin)
-        self.get_display(self.time_left)
+        self.show_display(self.time_left)
         self.display.show()
         self.started = False
         self.flagged = False #Time is expired
 
-    def get_display(self, time_left):
+    def show_display(self):
         """Recieve seconds left on the clock and return formatted output.
         """
-        if time_left > 60:
-            minutes = int(time_left) // 60
-            seconds = int(time_left) % 60
+        if self.time_left > 60:
+            minutes = int(self.time_left) // 60
+            seconds = int(self.time_left) % 60
             time_display = (minutes, seconds)
         else:
-            seconds = int(time_left)
-            milliseconds = int((time_left-int(time_left))*100)
+            seconds = int(self.time_left)
+            milliseconds = int((self.time_left-int(self.time_left))*100)
             time_display = (seconds, milliseconds)
 
         if int(self.time_left)%2 == 0:
@@ -87,7 +87,7 @@ class CountdownTimer(object):
         delta = time_now - (self.time_start)
         self.time_left = self.time_left - delta
         self.time_start = time_now
-        return self.get_display(self.time_left)
+        return self.show_display(self.time_left)
 
     def run_clock(self):
         """Run the countdown and listen for pauses.
@@ -96,7 +96,6 @@ class CountdownTimer(object):
             self.switch.update()
             if self.switch.fell:
                 self.pause()
-            time_display = self.get_time_remaining()
         if self.time_left <= 0:
             self.flagged = True
 
