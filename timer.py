@@ -16,7 +16,7 @@ class Timer(object):
         self.active = False
         self.started = False
 
-    def get_time_remaining(self):
+    def update_time_remaining(self):
         """Calculate time remaining on countdown.
         """
         if self.active == False:
@@ -26,20 +26,17 @@ class Timer(object):
             delta = time_now - (self.time_start)
             self.time_left = self.time_left - delta
             self.time_start = time_now
-            return self.time_left
 
     def start(self):
         """Start the countdown timer.
         """
-        time_now = time.monotonic()
-        self.time_start = time_now
+        self.time_start = time.monotonic()
         self.started = True
 
     def pause(self):
         """Pause the countdown timer.
         """
-        time_now = time.monotonic()
-        self.time_start = time_now
+        self.time_start = time.monotonic()
         self.active = False
         return self.time_left
 
