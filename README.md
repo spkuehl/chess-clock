@@ -2,9 +2,9 @@
 
 chess-clock is a circuitpython library for creating and controlling a chess clock.
 
-This library handles both the software and hardware.
+This library handles both the software and hardware implementation.
 
-It works on circuitpython 5.0.X
+Designed for circuitpython 5.0.X
 
 ## Installation
 
@@ -18,7 +18,7 @@ Copy ```code.py```,```timer.(m)py``` and ```chessclock.(m)py``` to your circuitp
 
 1 x [Featherboard M0 w/ circuitpython](https://www.adafruit.com/product/3403)
 
-2 x [7-segment display](https://www.adafruit.com/product/3109)
+2 x [7-segment display](https://www.adafruit.com/product/3109) Be sure to set up unique addresses ([guide](https://learn.adafruit.com/adafruit-led-backpack/changing-i2c-address#changing-addresses-50-1))
 
 2 x Buttons
 
@@ -50,4 +50,4 @@ Clock will start after a button is pressed. When the active player presses their
 ## Contributing
 Pull requests are always welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Fork > Clone > Make Changes > Commit > Pull Request
+Fork > Clone Fork > Branch Clone > Make Changes > Commit Branch > Pull Request
