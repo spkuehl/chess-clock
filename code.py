@@ -12,12 +12,12 @@ import chessclock
 def main():
     player_1 = chessclock.ChessClock(time_left = 60,
                                      display = segments.Seg7x4(i2c),
-                                     pin = DigitalInOut(board.D5), increment=5)
+                                     pin = DigitalInOut(board.D6), increment=5)
 
     player_2 = chessclock.ChessClock(time_left = 60,
                                      display = segments.Seg7x4(i2c,
                                                                address=0x71),
-                                     pin = DigitalInOut(board.D6), increment=5)
+                                     pin = DigitalInOut(board.D5), increment=5)
 
     while player_1.active == False and player_2.active == False:
         #Game starts when a player presses thier timer, opposite clock starts.

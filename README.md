@@ -35,13 +35,13 @@ Configure your clock as desired in `code.py`.
 
 player_1 = chessclock.ChessClock(time_left = 60,
                                  display = segments.Seg7x4(i2c),
-                                 pin = DigitalInOut(board.D5),
+                                 pin = DigitalInOut(board.D6),
                                  increment = 5)
 
 player_2 = chessclock.ChessClock(time_left = 60,
                                  display = segments.Seg7x4(i2c, address=0x71),
-                                 pin = DigitalInOut(board.D6),
-                                 increment=5)
+                                 pin = DigitalInOut(board.D5),
+                                 increment = 5)
 
 ```
 
