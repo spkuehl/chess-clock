@@ -1,10 +1,10 @@
 # Chess Clock
 
-chess-clock is a circuitpython library for creating and controlling a chess clock.
+chess-clock is a CircuitPython library for creating and controlling a chess clock.
 
 This library handles both the software and hardware implementation.
 
-Designed for circuitpython 5.0.X
+Created with CircuitPython v5.3.0 on an Adafruit Feather M0 Express - Designed for CircuitPython - ATSAMD21 Cortex M0
 
 ## Installation
 
@@ -50,7 +50,9 @@ player_2 = chessclock.ChessClock(time_left = 60,
 
 ```
 
-Clock will start after a button is pressed. When the active player presses their button, their timer will pause and the other player's timer will start.
+Clock will start after a button is pressed. When the active player presses their button, their timer will pause (and an increment will be added if applicable) and the other player's timer will start.
+
+Timers will continue counting down until one hits 00:00, indicating game over by time out.
 
 ## Contributing
 Pull requests are always welcome. For major changes, please open an issue first to discuss what you would like to change.
