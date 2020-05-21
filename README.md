@@ -20,12 +20,17 @@ Copy ```code.py```,```timer.(m)py``` and ```chessclock.(m)py``` to your circuitp
 
 2 x [7-segment display](https://www.adafruit.com/product/3109) Be sure to set up unique addresses ([guide](https://learn.adafruit.com/adafruit-led-backpack/changing-i2c-address#changing-addresses-50-1))
 
-2 x Buttons
+3 x Buttons (Left side, right side, power/reset)
 
 1 x [Lithium Ion Polymer Battery](https://www.adafruit.com/product/2750) (recommended)
 
-1 x Power/Reset Button (optional)
+#### Fritzing Example
 
+<img src="images/fritzing_chessclock.jpg">
+
+#### Real Example
+
+<img src="images/top_chessclock.JPG">
 
 ## Usage
 
