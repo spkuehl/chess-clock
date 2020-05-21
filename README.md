@@ -26,7 +26,7 @@ Copy ```code.py```,```timer.(m)py``` and ```chessclock.(m)py``` to your circuitp
 
 #### Fritzing Example
 
-<img src="images/fritzing_chessclock.jpg">
+<img src="images/fritzing_chessclock.jpg" width="40%">
 
 #### Real Example
 
