@@ -30,9 +30,11 @@ Copy ```code.py```,```timer.(m)py``` and ```chessclock.(m)py``` to your CircuitP
 
 1 x [Lithium Ion Polymer Battery](https://www.adafruit.com/product/2750) (recommended)
 
+1 x Large Breadboard w/ jumper wires
+
 ### Hardware Instructions
 
-Assemble and solder the Featherboard and Featherwings following Adafruit specifications. [7-segment display example](https://learn.adafruit.com/adafruit-7-segment-led-featherwings/assembly)
+Assemble and solder the Featherboard and Featherwings following Adafruit specifications. ([7-segment display assembly guide](https://learn.adafruit.com/adafruit-7-segment-led-featherwings/assembly))
 
 Set up unique i2c addresses for the 7 segment displays. ([address shorting guide](https://learn.adafruit.com/adafruit-led-backpack/changing-i2c-address#changing-addresses-50-1))
 
